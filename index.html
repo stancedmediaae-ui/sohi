@@ -9,8 +9,29 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Montserrat',sans-serif;background:radial-gradient(circle at 20% 80%, rgba(255,105,180,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,20,147,0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(255,182,193,0.1) 0%, transparent 50%), linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);min-height:100vh;overflow-x:hidden;color:#fff}
         .particle-system{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
-        .particle{position:absolute;width:2px;height:2px;border-radius:50%;animation:particleFloat 8s infinite linear}
-        @keyframes particleFloat{0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0}10%{opacity:1;transform:scale(1)}90%{opacity:1}100%{transform:translateY(-100px) translateX(100px) scale(0);opacity:0}}
+        .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    animation: fall 6s linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10px) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+    100% {
+        transform: translateY(100vh) translateX(50px) scale(0.5);
+        opacity: 0;
+    }
+}
+
         .glass-container{background:linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%), linear-gradient(225deg, rgba(255,105,180,0.1) 0%, rgba(255,20,147,0.05) 100%);backdrop-filter:blur(20px) saturate(180%);border-radius:24px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 32px rgba(255,105,180,0.15), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,105,180,0.1);padding:3rem;margin:2rem auto;max-width:900px;position:relative;overflow:hidden}
         .modern-button{background:linear-gradient(135deg, rgba(255,105,180,0.2), rgba(255,20,147,0.1));border:1px solid rgba(255,105,180,0.3);border-radius:16px;padding:16px 32px;color:#fff;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(255,105,180,0.2), inset 0 1px 0 rgba(255,255,255,0.1);position:relative;overflow:hidden;text-transform:lowercase;letter-spacing:0.5px;display:block;margin:0 auto;font-family:'Montserrat',sans-serif}
         .modern-button::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:left 0.6s}
@@ -149,17 +170,25 @@
         const reflections=["youre so cute and adorable and perfect i wish u were with me","i love your voice and like when u talk with me it sounds so melodic idk","i love your personality i feel like i havent pointed this out but like u have such a nice personality i love it ur like me but cooler","ur smile is so pretty like geniunely i feel sooo nice when u smile it makes my day","the way you listen to me while im yapping abt some random bs even though im a bad explainer is such a hear me out","ur eyes look so gorgeous","ur face in that one pic i sent myself 32 times looks so nice","ok so this isnt a compliment but i love you."];
         const surpriseMessages=["i told u not to but anyways i love you, you're so cute and lovely and cutie patootie and kuchu puchu, i hope you read this i love you so much ur soooo cute ugh i cant come over already"];
 
-        function createParticle(){
-            const particle=document.createElement('div');
-            particle.className='particle';
-            particle.style.left=Math.random()*100+'%';
-            particle.style.animationDelay=Math.random()*8+'s';
-            particle.style.animationDuration=(Math.random()*4+6)+'s';
-            const colors=['rgba(255,105,180,0.6)','rgba(255,20,147,0.4)','rgba(255,182,193,0.5)','rgba(255,255,255,0.3)'];
-            particle.style.background=colors[Math.floor(Math.random()*colors.length)];
-            document.getElementById('particle-system').appendChild(particle);
-            setTimeout(()=>{particle.remove()},10000);
-        }
+        function createParticle() {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = '-10px'; // start above the viewport
+    particle.style.animationDelay = Math.random() * 6 + 's';
+    particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+    const colors = [
+        'rgba(255,105,180,0.6)',
+        'rgba(255,20,147,0.4)',
+        'rgba(255,182,193,0.5)',
+        'rgba(255,255,255,0.3)'
+    ];
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    document.getElementById('particle-system').appendChild(particle);
+
+    setTimeout(() => particle.remove(), 10000);
+}
+
 
         setInterval(createParticle,300);
 
