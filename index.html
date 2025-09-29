@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for you</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Montserrat',sans-serif;background:radial-gradient(circle at 20% 80%, rgba(255,105,180,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,20,147,0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(255,182,193,0.1) 0%, transparent 50%), linear-gradient(135deg,#0a0a0a 0%,#1a1a1a 100%);min-height:100vh;overflow-x:hidden;color:#fff}
+        .particle-system{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+        .particle{position:absolute;width:2px;height:2px;border-radius:50%;animation:particleFloat 8s infinite linear}
+        @keyframes particleFloat{0%{transform:translateY(100vh) translateX(0) scale(0);opacity:0}10%{opacity:1;transform:scale(1)}90%{opacity:1}100%{transform:translateY(-100px) translateX(100px) scale(0);opacity:0}}
+        .glass-container{background:linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%), linear-gradient(225deg, rgba(255,105,180,0.1) 0%, rgba(255,20,147,0.05) 100%);backdrop-filter:blur(20px) saturate(180%);border-radius:24px;border:1px solid rgba(255,255,255,0.2);box-shadow:0 8px 32px rgba(255,105,180,0.15), inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(255,105,180,0.1);padding:3rem;margin:2rem auto;max-width:900px;position:relative;overflow:hidden}
+        .modern-button{background:linear-gradient(135deg, rgba(255,105,180,0.2), rgba(255,20,147,0.1));border:1px solid rgba(255,105,180,0.3);border-radius:16px;padding:16px 32px;color:#fff;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(255,105,180,0.2), inset 0 1px 0 rgba(255,255,255,0.1);position:relative;overflow:hidden;text-transform:lowercase;letter-spacing:0.5px;display:block;margin:0 auto;font-family:'Montserrat',sans-serif}
+        .modern-button::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:left 0.6s}
+        .modern-button:hover::before{left:100%}
+        .modern-button:hover{background:linear-gradient(135deg, rgba(255,105,180,0.3), rgba(255,20,147,0.2));transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,105,180,0.3), inset 0 1px 0 rgba(255,255,255,0.2);border-color:rgba(255,105,180,0.5)}
+        .hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;background:radial-gradient(circle at center, rgba(255,105,180,0.1) 0%, transparent 70%)}
+        .hero h1{font-size:clamp(2.5rem,5vw,4rem);font-weight:400;color:#fff;text-shadow:0 0 20px rgba(255,105,180,0.5);margin-bottom:1.5rem;line-height:1.2;letter-spacing:-0.02em;font-family:'Playfair Display', serif;font-style:italic}
+        .hero .subtitle{font-size:1.2rem;color:rgba(255,255,255,0.7);font-weight:400;margin-top:1rem;font-family:'Playfair Display', serif;font-style:italic}
+        .content-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:2rem;margin:3rem 0}
+        .content-card{background:linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);backdrop-filter:blur(15px);border-radius:20px;border:1px solid rgba(255,255,255,0.1);padding:2rem;text-align:left;transition:all 0.4s cubic-bezier(0.4,0,0.2,1);box-shadow:0 4px 20px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);position:relative;overflow:hidden}
+        .content-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg, rgba(255,105,180,0.5), rgba(255,20,147,0.5));transform:scaleX(0);transition:transform 0.4s ease}
+        .content-card:hover::before{transform:scaleX(1)}
+        .content-card:hover{transform:translateY(-8px);box-shadow:0 12px 40px rgba(255,105,180,0.2), inset 0 1px 0 rgba(255,255,255,0.2);border-color:rgba(255,105,180,0.3)}
+        .content-card h3{font-size:1.3rem;color:#fff;margin-bottom:1rem;font-weight:600;font-family:'Montserrat',sans-serif}
+        .content-card p{color:rgba(255,255,255,0.8);font-size:1rem;line-height:1.6;font-weight:400;font-family:'Montserrat',sans-serif}
+        .section{padding:6rem 2rem;position:relative}
+        .section h2{font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:3rem;text-align:center;font-weight:400;letter-spacing:-0.02em;font-family:'Playfair Display', serif;font-style:italic}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;backdrop-filter:blur(10px);animation:modalFadeIn 0.3s ease}
+        @keyframes modalFadeIn{from{opacity:0}to{opacity:1}}
+        .modal-content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);backdrop-filter:blur(25px);border-radius:24px;padding:3rem;text-align:center;border:1px solid rgba(255,255,255,0.2);box-shadow:0 20px 60px rgba(255,105,180,0.3), inset 0 1px 0 rgba(255,255,255,0.2);max-width:500px;width:90%;animation:modalSlideIn 0.4s cubic-bezier(0.4,0,0.2,1)}
+        @keyframes modalSlideIn{from{transform:translate(-50%,-60%);opacity:0}to{transform:translate(-50%,-50%);opacity:1}}
+        .modal-content p{font-size:1.2rem;color:#fff;margin-bottom:1rem;line-height:1.6;font-family:'Montserrat',sans-serif}
+        .close{position:absolute;top:20px;right:25px;font-size:24px;font-weight:300;color:rgba(255,255,255,0.7);cursor:pointer;transition:color 0.3s ease}
+        .close:hover{color:#fff}
+        .reveal-content{margin-top:2rem;padding:2rem;background:linear-gradient(135deg, rgba(255,105,180,0.1) 0%, rgba(255,20,147,0.05) 100%);border-radius:16px;display:none;border:1px solid rgba(255,105,180,0.2);animation:revealSlide 0.5s ease}
+        @keyframes revealSlide{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1.5rem;margin:3rem 0}
+        .gallery-item{aspect-ratio:1;background:linear-gradient(135deg, rgba(255,105,180,0.1), rgba(255,20,147,0.05));border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:2rem;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);transition:all 0.4s cubic-bezier(0.4,0,0.2,1);cursor:pointer;position:relative;overflow:hidden}
+        .gallery-item::before{content:'';position:absolute;top:50%;left:50%;width:0;height:0;background:radial-gradient(circle, rgba(255,105,180,0.2) 0%, transparent 70%);transition:all 0.4s ease;transform:translate(-50%,-50%)
+        }
+        .gallery-item:hover::before{width:200%;height:200%}
+        .gallery-item:hover{transform:scale(1.05);box-shadow:0 10px 30px rgba(255,105,180,0.3);border-color:rgba(255,105,180,0.4)}
+        @media (max-width:768px){.glass-container{margin:1rem;padding:2rem}.content-grid{grid-template-columns:1fr;gap:1.5rem}.section{padding:4rem 1rem}}
+        .fade-in{opacity:0;transform:translateY(30px);transition:all 0.6s ease}
+        .fade-in.visible{opacity:1;transform:translateY(0)}
+        .r90 {
+    transform: rotate(-90deg);
+}
+.r90:hover {
+    transform: rotate(-90deg) scale(1.05); /* combines rotation with hover scale */
+}
+    </style>
+</head>
+<body>
+    <div class="particle-system" id="particle-system"></div>
+
+    <section class="hero">
+        <div class="glass-container fade-in">
+            <h1>something beautiful (other than u)</h1>
+            <p>i made this for u cuz i lowkey feel bad for not giving u anything i hope this atleast makes up for it</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="fade-in">why im lowkey in luv with u</h2>
+        <div class="content-grid">
+            <div class="content-card fade-in">
+                <h3>ur cuteness duh</h3>
+                <p>idk what to write here ur js so cute and like idk stop being so cute im falling pls</p>
+            </div>
+            <div class="content-card fade-in">
+                <h3>the lil touch u do (not the freaky way tho that counts too)</h3>
+                <p>like yk even today where u like held my arm and idk it feels nice and i love you sm for it please do that again</p>
+            </div>
+            <div class="content-card fade-in">
+                <h3>how u like motivate me and glaze me sometimes</h3>
+                <p>like ill make the shitiest website and ull start glazing me saying its so cool even tho its the most basic one (like this) and like it motivates me to do better than im doing to like impress u idk?</p>
+            </div>
+            <div class="content-card fade-in">
+                <h3>how u make me feel loved</h3>
+                <p>ok geniunely ur like the only person who makes me feel nice about myself while i look like a restart and like it feels nice to know that u still love me even tho im like this</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="glass-container fade-in">
+            <h2>more stuff for u to read</h2>
+            <p style="font-size:1.1rem;color:rgba(255,255,255,0.8);margin-bottom:2rem;line-height:1.6;font-family:'Montserrat',sans-serif">ok this is kinda cutesy so click on the button if u wanna read it</p>
+            <button class="modern-button" onclick="revealEffect()">touch me!</button>
+            <div class="reveal-content" id="effect-reveal">
+                <p style="font-size:1.2rem;color:#fff;line-height:1.6;font-family:'Montserrat',sans-serif">yes hi so like err how do i say this viuwehuc yes YES so basically i like really really really adore the way u hug me and like pat my hair when u r about to hug me and like lowkey i wud do anything LIKE ANYTHING for u to do that again cuz ur js so nice and lovely</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="glass-container fade-in">
+            <h2>compliments for u cuz i love you</h2>
+			<center>
+            <p style='padding-bottom:32px; color:grey;'> its gna be a new compliment evertime hopefully </p> </center>
+            <button class="modern-button" onclick="showReflection()">hehe ily</button>
+        </div>
+    </section>
+
+<section class="section">
+    <div class="glass-container fade-in">
+        <h2>my fav pics of u</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item r90"><img src="https://github.com/stancedmediaae-ui/sohi/blob/main/512785694_708306855144224_3714622327485840165_n.jpg?raw=true" alt="image1" style="width:100%;height:100%;object-fit:cover;border-radius:16px"></div>
+            <div class="gallery-item r90"><img src="https://github.com/stancedmediaae-ui/sohi/blob/main/513507330_4254773334742486_3530195360486532665_n.jpg?raw=true" alt="image2" style="width:100%;height:100%;object-fit:cover;border-radius:16px"></div>
+            <div class="gallery-item"><img src="https://github.com/stancedmediaae-ui/sohi/blob/main/514135362_1410849136673746_209582134742591429_n.jpg?raw=true" alt="image3" style="width:100%;height:100%;object-fit:cover;border-radius:16px"></div>
+            <div class="gallery-item"><img src="https://github.com/stancedmediaae-ui/sohi/blob/main/515159940_594621896662900_2333565493463944270_n.jpg?raw=true" alt="image4" style="width:100%;height:100%;object-fit:cover;border-radius:16px"></div>
+            <div class="gallery-item r90"><img src="https://github.com/stancedmediaae-ui/sohi/blob/main/517948505_780302387764209_8383167214451377729_n.jpg?raw=true" alt="image5" style="width:100%;height:100%;object-fit:cover;border-radius:16px"></div>
+            <div class="gallery-item r90"><img src="https://github.com/stancedmediaae-ui/sohi/blob/main/524478753_1322426063226196_1131986916197100239_n.png?raw=true" alt="image6" style="width:100%;height:100%;object-fit:cover;border-radius:16px"></div>
+        </div>
+    </div>
+</section>
+
+
+    <section class="section">
+        <div class="glass-container fade-in">
+            <h2>do not click the button</h2>
+            <button class="modern-button" onclick="triggerSurprise()">DO NOT CLICK ME</button>
+            <div class="reveal-content" id="surprise-reveal">
+                <p id="surprise-message"></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="glass-container fade-in">
+            <h2 style="font-size:2.5rem;font-weight:300;margin-bottom:1rem;font-family:'Playfair Display', serif;font-style:italic">i love you.</h2>
+            <p style="font-size:1.2rem;color:rgba(255,255,255,0.8);line-height:1.6;font-family:'Montserrat',sans-serif">fun challenge: count the number of times i said ily in the entire thing, ok bye text me now</p>
+        </div>
+    </section>
+
+    <div id="reflection-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="reflection-message"></p>
+        </div>
+    </div>
+
+    <script>
+        const reflections=["youre so cute and adorable and perfect i wish u were with me","i love your voice and like when u talk with me it sounds so melodic idk","i love your personality i feel like i havent pointed this out but like u have such a nice personality i love it ur like me but cooler","ur smile is so pretty like geniunely i feel sooo nice when u smile it makes my day","the way you listen to me while im yapping abt some random bs even though im a bad explainer is such a hear me out","ur eyes look so gorgeous","ur face in that one pic i sent myself 32 times looks so nice","ok so this isnt a compliment but i love you."];
+        const surpriseMessages=["i told u not to but anyways i love you, you're so cute and lovely and cutie patootie and kuchu puchu, i hope you read this i love you so much ur soooo cute ugh i cant come over already"];
+
+        function createParticle(){
+            const particle=document.createElement('div');
+            particle.className='particle';
+            particle.style.left=Math.random()*100+'%';
+            particle.style.animationDelay=Math.random()*8+'s';
+            particle.style.animationDuration=(Math.random()*4+6)+'s';
+            const colors=['rgba(255,105,180,0.6)','rgba(255,20,147,0.4)','rgba(255,182,193,0.5)','rgba(255,255,255,0.3)'];
+            particle.style.background=colors[Math.floor(Math.random()*colors.length)];
+            document.getElementById('particle-system').appendChild(particle);
+            setTimeout(()=>{particle.remove()},10000);
+        }
+
+        setInterval(createParticle,300);
+
+        function handleScroll(){
+            document.querySelectorAll('.fade-in').forEach(element=>{
+                if(element.getBoundingClientRect().top < window.innerHeight-150){
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll',handleScroll);
+        handleScroll();
+
+        function revealEffect(){
+            const reveal=document.getElementById('effect-reveal');
+            reveal.style.display=reveal.style.display==='block'?'none':'block';
+        }
+
+        function showReflection(){
+            const modal=document.getElementById('reflection-modal');
+            const message=document.getElementById('reflection-message');
+            message.textContent=reflections[Math.floor(Math.random()*reflections.length)];
+            modal.style.display='block';
+        }
+
+        function closeModal(){document.getElementById('reflection-modal').style.display='none'}
+
+        function triggerSurprise(){
+            const surpriseDiv=document.getElementById('surprise-reveal');
+            const surpriseText=document.getElementById('surprise-message');
+            surpriseText.textContent=surpriseMessages[Math.floor(Math.random()*surpriseMessages.length)];
+            surpriseDiv.style.display='block';
+            setTimeout(()=>{surpriseDiv.style.display='none'},5000);
+        }
+
+        window.onclick=function(event){
+            if(event.target===document.getElementById('reflection-modal')){
+                closeModal();
+            }
+        }
+
+        for(let i=0;i<10;i++){setTimeout(createParticle,i*200)}
+    </script>
+</body>
+</html>
